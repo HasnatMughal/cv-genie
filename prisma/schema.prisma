@@ -1,0 +1,93 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+model User{
+  id String  @id @default(cuid())
+  name String?
+  email String  @unique
+  password String?
+  plan String @default("free")
+  createdAt DateTime @default(now())
+  resume String?
+
+
+  coverLetters CoverLetter[]
+  resumes Resume[]
+  jobMatches JobMatch[]
+  interviewPrep InterviewPrep[]
+  linkedInOpt LinkedInOpt[]
+  coldMails ColdMail[]
+
+}
+
+
+model CoverLetter{
+  id String @id @default(cuid())
+  content String
+  jobTitle String
+  createdAt DateTime @default(now())
+  company String 
+  
+  userId String
+  user User @relation(fields:[userId], references:[id])
+
+}
+
+model Resume{
+  id String @id @default(cuid())
+  content String @db.Text
+  score Int?
+  feedback String @db.Text
+
+  userId String
+  user User @relation(fields:[userId] , references:[id])
+  }
+
+model JobMatch{
+  id String @id @default(cuid())
+  JobTitle String 
+  JobDesc String @db.Text
+  matchScore Int?
+  analysis String @db.Text
+  createdAt DateTime @default(now())
+
+   userId String
+  user User @relation(fields:[userId] , references:[id])
+}
+
+model InterviewPrep{
+  id String @id @default(cuid())
+  JobTitle String
+  questions Json
+  createdAt DateTime @default(now())
+
+   userId String
+  user User @relation(fields:[userId] , references:[id])
+}
+
+model LinkedInOpt{
+  id String @id @default(cuid())
+  headline String 
+  about String @db.Text
+  createdAt DateTime @default(now())
+
+  userId String
+  user User @relation(fields:[userId] , references:[id])
+}
+
+model ColdMail{
+  id String @id @default(cuid())
+  subject String
+  body String @db.Text
+  createdAt DateTime @default(now())
+
+  userId String
+  user User @relation(fields:[userId] , references:[id])
+}
