@@ -62,19 +62,20 @@ export default function ResumeAnalysis(){
         <>
         <div className="min-h-screen w-full">
             <h1 className="text-3xl font-semibold text-center">Analyze Your Resume</h1>
-            <div className="flex items-center justify-between gap-2">
-            <div className="flex flex-col p-4 gap-4 w-1/3 min-h-screen h-full self-start border shadow-md items-center">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-2">
+            <div className="flex flex-col p-4 gap-4 w-full md:w-1/3 md:min-h-screen h-full self-start border border-gray-200 shadow-md items-center">
             <h1 className="text-2xl font-semibold">Send Your Resume</h1>
           {loading ? <p>Looking for your resume...</p> : resume ? <div className=" flex flex-col items-center gap-4 justify-center ">
             <p className="text-sm">We have your resume, Just click the button below and get a detailed analysis of your resume.</p>
-            <button className="w-full bg-blue-500 hover:bg-blue-700 text-white py-2" onClick={() => getAnalysis()}>Get Analysis</button>
+            <button className=" bg-blue-500 hover:bg-blue-700 text-white py-2 px-4" onClick={() => getAnalysis()}>Get Analysis</button>
           </div> : <div>
             <p className="text-sm">Looks like you have not uploaded your resume, Click the button below and upload your resume.</p>
             <ResumeuploadButton />
             </div>}
             </div>
-            <div className="border p-4 w-2/3 flex flex-col min-h-screen">
-               <h1 className="font-semibold text-xl"> Your Resume Analysis</h1>
+            <div className="border border-gray-200 p-4 w-full md:w-2/3 flex flex-col md:min-h-screen">
+               <h1 className="font-semibold text-xl">Your resume analysis will appear here</h1>
+               {!analysis ? <p>Click "Get Analysis" to see your ATS score, strengths, and areas to improve.</p> : ""}
                {score ? <div className="border p-4">
                 <p>Your ATS score:</p>
                 {score && score <= 30 ? <p className="text-red-600">{score}</p>: score <= 60 ? <p className="text-yellow-600">{score}</p> : score >= 60 && <p className="text-green-600">{score}</p>  }

@@ -39,7 +39,8 @@ export default function Login(){
         router.push('/')
     } else if(!session){
          return( 
-   <div className=" flex items-center justify-center">
+   <div className=" flex items-center bg-gray-500 min-h-screen justify-center w-full">
+    
     <div className="w-full max-w-sm bg-white rounded-2xl shadow-sm border border-gray-100 p-8 flex flex-col gap-6">
         <div className="text-center">
             <h1 className="text-3xl font-bold text-black">Login</h1>
@@ -71,10 +72,11 @@ export default function Login(){
         </form>
         {error ? <p>{error}</p> : ""}
         <p className="text-center text-sm text-gray-400">
-            Don't have an account? <a href="/signup" className="text-blue-600 hover:underline">Login</a>
+            Don't have an account? <a href="/signup" className="text-blue-600 hover:underline">Register now</a>
         </p>
     </div>
-</div>)
+    </div>
+)
     }
   
 }

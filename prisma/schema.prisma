@@ -12,7 +12,7 @@ model User{
   id String  @id @default(cuid())
   name String?
   email String  @unique
-  password String?
+  password String
   plan String @default("free")
   createdAt DateTime @default(now())
   resume String?
@@ -86,6 +86,8 @@ model ColdMail{
   id String @id @default(cuid())
   subject String
   body String @db.Text
+  company String?
+  purpose String?
   createdAt DateTime @default(now())
 
   userId String

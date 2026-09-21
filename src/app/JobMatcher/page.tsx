@@ -24,7 +24,7 @@ export default function JobMatcher(){
             )
             if(res.ok){
                 const data = await res.json()
-                const analysis = JSON.parse(data) 
+                const analysis = JSON.parse(data.analysis)
                 console.log(analysis)
                 setAnalysis(analysis)
             }
@@ -36,8 +36,8 @@ export default function JobMatcher(){
    return(
 <div className="min-h-screen w-full">
             <h1 className="text-3xl font-semibold text-center">Job Matcher</h1>
-            <div className="flex items-center justify-between gap-2">
-            <div className="flex flex-col gap-4 w-1/3 min-h-screen border shadow-md items-center h-full self-start">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-2">
+            <div className="flex flex-col gap-4 w-full md:w-1/3 md:min-h-screen border border-gray-200 shadow-md items-center h-full self-start">
 
           
             <form action="" className="flex flex-col justify-center p-4 items-center gap-4" onSubmit={(e) => 
@@ -57,8 +57,9 @@ export default function JobMatcher(){
             <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white w-full py-2">Submit</button>
            </form>
             </div>
-            <div className="border p-4 w-2/3 flex flex-col min-h-screen">
-               <h1 className="font-semibold text-xl">Job Analysis:</h1>
+            <div className="border border-gray-200 p-4 w-full md:w-2/3 flex flex-col md:min-h-screen">
+               <h1 className="font-semibold text-xl">Your match results will appear here</h1>
+               {!analysis ? <p>Paste a job description on the left to see how well your resume matches this role.</p> : ""}
                 <div className="flex flex-col gap-4 items-start">
                 {analysis?.matchScore  ? <div className="border p-4">
                 <p>Match Score:</p>

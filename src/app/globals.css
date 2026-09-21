@@ -27,3 +27,7 @@ body {
  li{
   list-style: none;
  }
+
+ .extraSmallText{
+  font-size: 8px;
+ }

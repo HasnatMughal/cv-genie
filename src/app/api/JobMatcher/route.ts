@@ -43,9 +43,22 @@ export async function POST(request:any){
         response_format:{type:'json_object'}
     })
 
-    const response =  completions.choices[0].message.content
+    const response = JSON.parse( completions.choices[0].message.content ?? "{}")
 
-    return NextResponse.json(response)
+    const JobMatch = await prisma.jobMatch.create({
+        data:{
+            analysis:JSON.stringify({
+                matchingSkills:response.matchingSkills,
+                missingSkills:response.missingSkills
+            }),
+            JobDesc:description,
+            JobTitle:jobTitle,
+            matchScore:response.matchScore,
+            userId: user?.id
+        }
+    })
+
+    return NextResponse.json(JobMatch)
 
 
 

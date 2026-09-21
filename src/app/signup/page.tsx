@@ -1,5 +1,6 @@
 "use client"
 
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -9,6 +10,7 @@ export default function Signup(){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const router = useRouter()
+    const {data:session} = useSession()
 
     const handleSubmit = async () => {
         try {
@@ -27,9 +29,12 @@ export default function Signup(){
             
         }
     }
+    if(session){
+        router.push('/')
+    }
 
     return(
-<div className=" flex items-center justify-center">
+<div className=" flex items-center bg-gray-500 min-h-screen justify-center w-full">
     <div className="w-full max-w-sm bg-white rounded-2xl shadow-sm border border-gray-100 p-8 flex flex-col gap-6">
         <div className="text-center">
             <h1 className="text-3xl font-bold text-black">Create Account</h1>

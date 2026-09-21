@@ -21,7 +21,7 @@ const [resumeFile, setResumeFile] = useState('')
     }
   return (
     <>
-    <UploadButton endpoint="resumeUploader"
+    <UploadButton endpoint="resumeUploader" 
             onClientUploadComplete={ (res) => {
                 const fileUrl = res[0].ufsUrl
                 setResumeFile(fileUrl)

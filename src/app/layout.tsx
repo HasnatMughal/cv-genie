@@ -5,6 +5,7 @@ import { SessionProvider } from "next-auth/react";
 import Navbar from "@/components/Navbar";
 import { Poppins } from "next/font/google";
 import Container from "@/components/Container";
+import { Toaster } from "sonner";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -24,15 +25,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${poppins.variable} ${poppins.variable} h-full antialiased`}
     >
-      <body className="min-h-full w-full flex  ">
+      <body className="min-h-full w-full flex  md:flex-row flex-col ">
         <SessionProvider>
-        <div className="max-w-72 border-r">
-        <Navbar />
-        </div>
        <Container>
+        <div className=" flex ">
+
+        <Navbar />
         {children}
+        </div>
 </Container>
         </SessionProvider>
+        <Toaster />
         </body>
     </html>
   );
