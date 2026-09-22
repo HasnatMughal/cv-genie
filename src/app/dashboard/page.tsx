@@ -1,6 +1,8 @@
 'use client'
 
 import DashboardCard from "@/components/DashboardCard";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type data = {
@@ -14,6 +16,9 @@ type data = {
 
 }
 export default function Dashboard(){
+
+ 
+
     const [userData, setUserData] = useState<data |null>(null)
     const [loading, setLoading] = useState(false)
    const getUserData = async() => {
@@ -72,6 +77,17 @@ export default function Dashboard(){
     },
    ]
 
+   const { data: session, status } = useSession()
+    const router = useRouter()
+
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push("/login")
+        }
+    }, [status, router])
+
+    if (status === "loading") return <div>Loading...</div>
+    if (!session) return null
    return(
     <>
     <div className="min-h-screen w-full">
@@ -83,7 +99,7 @@ export default function Dashboard(){
             {loading ? <p>Loading...</p> : stats && stats.map((stat, i) => {
                 return(
                     <li key={i}>
-                        <DashboardCard count={Number(stat.data?.length)} link={stat.link} title={stat.name} />
+                        <DashboardCard count={stat.data?.length as number} link={stat.link} title={stat.name} />
                     </li>
                 )
             })}

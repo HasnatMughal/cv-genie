@@ -1,6 +1,9 @@
 'use client'
 
-import { useState } from "react";
+import useGetUserPlan from "@/hooks/useGetUserPlan";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function ColdMail(){
     const [company, setCompany] = useState('')
@@ -10,6 +13,23 @@ export default function ColdMail(){
     const [loading, setLoading] = useState(false)
     const [copiedBody, setCopiedBody] = useState(false)
     const [copiedSubj, setCopiedSubj] = useState(false)
+
+    const { data: session, status } = useSession()
+    const router = useRouter()
+
+    
+   const userPlan = useGetUserPlan()
+
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push("/login")
+        }
+        if(userPlan.userPlan === 'free'){
+            router.push('/UpgradeToPro')
+        }
+    }, [status, router, userPlan.userPlan])
+
+   
 
     const handleSubmit = async () => {
         setLoading(true)
@@ -44,6 +64,10 @@ export default function ColdMail(){
        setCopiedBody(true)
 
     }
+    
+
+    if (status === "loading") return <div>Loading...</div>
+    if (!session) return null
 
 
     return(

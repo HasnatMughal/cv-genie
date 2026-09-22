@@ -17,8 +17,11 @@ import {
 
 export default function Home() {
   const [userPlan, setUserPlan] = useState('Free')
+  const [loading, setLoading] = useState(false)
   const getUser = async () => {
-    const res = await fetch(`/api/user/me`,
+    setLoading(true)
+   try {
+     const res = await fetch(`/api/user/me`,
       {
         method:"GET"
       }
@@ -28,6 +31,11 @@ export default function Home() {
         const data = await res.json()
         setUserPlan(data?.body?.plan)
       }
+   } catch (error) {
+    
+   }finally{
+    setLoading(false)
+   }
   }
 useEffect(() => {
   getUser()
@@ -37,50 +45,57 @@ const featureItems = [
         name: "Dashboard",
         link: "/dashboard",
         icon: FiGrid,
-        description: "Overview of your activity"
+        description: "Overview of your activity",
+        available:true
     },
     {
         name: "Cover Letter Generator",
         link: "/CoverLetter",
         icon: FiFileText,
-        description: "Generate tailored cover letters instantly"
+        description: "Generate tailored cover letters instantly",
+        available:  true
     },
     {
         name: "Resume Analyzer",
-        link: "/ResumeAnalysis",
+        link: userPlan === 'paid' ? "/ResumeAnalysis" : "/UpgradeToPro",
         icon: FiSearch,
-        description: "Get AI feedback on your resume"
+        description: "Get AI feedback on your resume",
+        available: userPlan === "paid" ? true : false
     },
     {
         name: "Job Matcher",
-        link: "/JobMatcher",
+        link: userPlan === 'paid' ? "/JobMatcher" : "/UpgradeToPro",
         icon: FiUsers,
-        description: "Find roles that match your profile"
+        description: "Find roles that match your profile",
+        available: userPlan === "paid" ? true : false
     },
     {
         name: "Interview Prep",
-        link: "/interViewPrep",
+        link:userPlan === 'paid' ? "/interViewPrep" : "/UpgradeToPro",
         icon: FiMic,
-        description: "Practice with AI-generated interview questions"
+        description: "Practice with AI-generated interview questions",
+        available: userPlan === "paid" ? true : false
     },
     {
         name: "LinkedIn Generator",
-        link: "/LinkedInOpt",
+        link:userPlan === 'paid' ? "/linkedInOpt" : "/UpgradeToPro",
         icon: FiLinkedin,
-        description: "Craft an optimized LinkedIn profile"
+        description: "Craft an optimized LinkedIn profile",
+        available: userPlan === "paid" ? true : false
     },
     {
         name: "Cold Email Generator",
-        link: "/cold-email",
+        link: userPlan === 'paid' ? "/cold-email" : "/UpgradeToPro",
         icon: FiMail,
-        description: "Write outreach emails that get replies"
+        description: "Write outreach emails that get replies",
+        available: userPlan === "paid" ? true : false
     },
    
 ]
   return (
     <div className="flex   flex-col flex-1 items-center font-sans ">
       <div className="flex items-center py-4 justify-center gap-8 w-full border-b border-gray-200">
-      <p className="flex gap-2 ">Current Plan: {userPlan === "free" ? <p>Free</p> : userPlan === 'paid' && <p>Paid</p>}</p>
+      <p className="flex gap-2 ">Current Plan: {loading === true ? <span>Loading...</span> : userPlan === "free" ? <span>Free</span> : userPlan === 'paid' && <span>Paid</span>}</p>
       {userPlan === 'free' ? <UpgradeToPro /> : ''}
 
       </div>
@@ -94,7 +109,7 @@ const featureItems = [
         {featureItems.map((item, i) => {
           return(
             <li key={i}>
-              <FeatureCard link={item.link} name={item.name} icon={item.icon} description={item.description}/>
+              <FeatureCard link={item.link} name={item.name} icon={item.icon} description={item.description} available={item.available}/>
             </li>
           )
         })}

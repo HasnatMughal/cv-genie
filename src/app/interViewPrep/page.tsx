@@ -1,18 +1,39 @@
 "use client"
 
 import ResultView from "@/components/ResultView"
+import useGetUserPlan from "@/hooks/useGetUserPlan"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 
 
 
 export default function InterviewPrep(){
+
+ 
+
     const [jobTitle, setJobTitle] = useState('')
     const [userResume , setUserResume] = useState('')
     const [questions, setQuestions] = useState([])
     const [answers, setAnswers] = useState<string[]>(Array(7).fill(''))
     const [result, setResult] = useState('')
     const [answer,setAnswer] = useState('')
+
+    const { data: session, status } = useSession()
+        const router = useRouter()
+    
+        
+       const userPlan = useGetUserPlan()
+    
+        useEffect(() => {
+            if (status === "unauthenticated") {
+                router.push("/login")
+            }
+            if(userPlan.userPlan === 'free'){
+                router.push('/UpgradeToPro')
+            }
+        }, [status, router, userPlan.userPlan])
 
     const handleAnswer = (index:number, value:string) =>{
         const updated = [...answers]
@@ -72,6 +93,9 @@ export default function InterviewPrep(){
         }
     }
 
+
+    if (status === "loading") return <div>Loading...</div>
+    if (!session) return null
     
     return(
        <div className="min-h-screen w-full">

@@ -1,6 +1,9 @@
 "use client"
 
-import { useState } from "react";
+import useGetUserPlan from "@/hooks/useGetUserPlan";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 type responseType ={
     matchScore: number,
@@ -10,9 +13,27 @@ type responseType ={
 } 
 
 export default function JobMatcher(){
+
+ 
+
     const [jobTitle, setJobTitle] = useState('')
     const [description, setDescription] = useState('')
     const [analysis,setAnalysis] = useState<responseType | null>(null)
+
+    const { data: session, status } = useSession()
+    const router = useRouter()
+
+    
+   const userPlan = useGetUserPlan()
+
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push("/login")
+        }
+        if(userPlan.userPlan === 'free'){
+            router.push('/UpgradeToPro')
+        }
+    }, [status, router, userPlan.userPlan])
 
     const getJobMatch = async () => {
         try {
@@ -32,6 +53,10 @@ export default function JobMatcher(){
             console.log(error)
         }
     }
+    
+
+    if (status === "loading") return <div>Loading...</div>
+    if (!session) return null
 
    return(
 <div className="min-h-screen w-full">

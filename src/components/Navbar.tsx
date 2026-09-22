@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavItem from './NavItem'
 import { usePathname } from 'next/navigation';
 import {
@@ -20,19 +20,43 @@ import {
 function Navbar() {
     const [isOpen, setIsOpen] = useState(false)
     const pathname = usePathname()
+    const [userPlan , setUserPlan] = useState('')
+
+    const getUser = async () => {
+        
+       try {
+         const res = await fetch(`/api/user/me`,
+          {
+            method:"GET"
+          }
+         
+        )
+         if(res.ok){
+            const data = await res.json()
+            console.log("Nav" ,data)
+            setUserPlan(data?.body?.plan)
+          }
+       } catch (error) {
+        
+       }
+      }
+
+    useEffect(() => {
+      getUser()
+    },[])
 
     
 
     const navItems = [
         { name: "Home", link: "/", icon: FiHome, comingSoon: false },
-        { name: "Dashboard", link: "/dashboard", icon: FiGrid, comingSoon: false },
-        { name: "Cover Letter", link: "/CoverLetter", icon: FiFileText, comingSoon: false },
-        { name: "Resume Analyzer", link: "/ResumeAnalysis", icon: FiSearch, comingSoon: false },
-        { name: "Job Matcher", link: "/JobMatcher", icon: FiUsers, comingSoon: false },
-        { name: "Interview Preperation", link: "/interViewPrep", icon: FiMic, comingSoon: false },
-        { name: "LinkedIn Generator", link: "/LinkedInOpt", icon: FiLinkedin, comingSoon: false },
-        { name: "Cold Email Generator", link: "/cold-email", icon: FiMail, comingSoon: false },
-        { name: "Settings", link: "/settings", icon: FiSettings, comingSoon: false },
+        { name: "Dashboard", link: "/dashboard", icon: FiGrid, available:  true  },
+        { name: "Cover Letter", link:  "/CoverLetter" , icon: FiFileText, available: true },
+        { name: "Resume Analyzer", link: userPlan === "paid" ? "/ResumeAnalysis" : 'UpgradeToPro', icon: FiSearch, available: userPlan === "paid" ? true : false },
+        { name: "Job Matcher", link:   userPlan === "paid" ? "/JobMatcher" : 'UpgradeToPro', icon: FiUsers, available: userPlan === "paid" ? true : false  },
+        { name: "Interview Preperation", link:  userPlan === "paid" ? "/interViewPrep" : 'UpgradeToPro', icon: FiMic, available: userPlan === "paid" ? true : false  },
+        { name: "LinkedIn Generator", link:  userPlan === "paid" ? "/LinkedInOpt" : 'UpgradeToPro', icon: FiLinkedin, available: userPlan === "paid" ? true : false  },
+        { name: "Cold Email Generator", link: userPlan === "paid" ? "/cold-email" : 'UpgradeToPro', icon: FiMail, available: userPlan === "paid" ? true : false  },
+        { name: "Settings", link: "/settings", icon: FiSettings, available: true },
     ]
 
     if(pathname === "/login" || pathname === '/signup'){
@@ -80,7 +104,7 @@ function Navbar() {
                                 name={item.name}
                                 icon={item.icon}
                                 link={item.link}
-                                comingSoon={item.comingSoon}
+                                available={item.available as boolean}
                             />
                         </li>
                     ))}

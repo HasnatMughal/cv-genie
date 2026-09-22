@@ -1,8 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 
 export default function CoverLetter(){
+
+ 
+
     const [jobTitle, setJobTitle] = useState('')
     const [description, setDescription] = useState('')
     const [company, setCompany] = useState('')
@@ -27,6 +32,17 @@ export default function CoverLetter(){
             
         }
     }
+    const { data: session, status } = useSession()
+    const router = useRouter()
+
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push("/login")
+        }
+    }, [status, router])
+
+    if (status === "loading") return <div>Loading...</div>
+    if (!session) return null
 
     return(
         <>

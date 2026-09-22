@@ -3,6 +3,8 @@
 import Logout from "@/components/Logout";
 import UpgradeToPro from "@/components/UpgradeToPro";
 import { UploadButton } from "@/lib/uploadthing";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 import { toast } from "sonner";
 type User = {
@@ -20,6 +22,7 @@ type User = {
 };
 
 export default function Setting(){
+
      const [user, setUser] = useState<User | null>(null)
     const [fetching, setFetching] = useState(true)
     const [openLogoutOption , setOpenLogoutOption] = useState(false)
@@ -42,9 +45,23 @@ export default function Setting(){
         getUser()
     }, [])
 
+     const { data: session, status } = useSession()
+    const router = useRouter()
+
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push("/login")
+        }
+    }, [status, router])
+
+    if (status === "loading") return <div>Loading...</div>
+
     if (fetching) {
         return <div className="flex justify-center items-center min-h-screen">Loading...</div>
     }
+
+   
+    if (!session) return null
 
     return (
     <div className="max-w-2xl mx-auto py-10 px-4 flex flex-col gap-8">

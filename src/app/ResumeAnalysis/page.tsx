@@ -2,6 +2,9 @@
 
 import ResumeuploadButton from "@/components/ResumeuploadButton"
 import ResumeUploadCard from "@/components/ResumeUploadCard"
+import useGetUserPlan from "@/hooks/useGetUserPlan";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 
 type FeedbackType = {
@@ -12,11 +15,28 @@ type FeedbackType = {
 };
 
 export default function ResumeAnalysis(){
+
+ 
     const [analysis, setAnalysis] = useState('')
     const [resume, setResume] = useState('')
     const [loading, setLoading] = useState(false)
     const [parsedFeedback, setParsedFeedback] = useState <FeedbackType| null>(null)
     const [score, setScore] = useState(0)
+
+    const { data: session, status } = useSession()
+    const router = useRouter()
+
+    
+   const userPlan = useGetUserPlan()
+
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push("/login")
+        }
+        if(userPlan.userPlan === 'free'){
+            router.push('/UpgradeToPro')
+        }
+    }, [status, router, userPlan.userPlan])
 
     const getMyResume = async() => {
         setLoading(true)
@@ -56,6 +76,12 @@ export default function ResumeAnalysis(){
             
         }
     }
+
+    
+
+    if (status === "loading") return <div>Loading...</div>
+    if (!session) return null
+
     
     
     return(

@@ -2,15 +2,17 @@
 
 import Link from 'next/link'
 import React from 'react'
+import { FiLock } from 'react-icons/fi'
 
 type FeatureCardProps = {
     link: string,
     name: string,
     icon: React.ElementType,
-    description?: string
+    description?: string,
+    available? : boolean
 }
 
-function FeatureCard({ link, name, icon, description }: FeatureCardProps) {
+function FeatureCard({ link, name, icon, description, available }: FeatureCardProps) {
     const Icon = icon;
     return (
         <Link
@@ -20,7 +22,7 @@ function FeatureCard({ link, name, icon, description }: FeatureCardProps) {
             <div className='w-10 h-10 flex items-center justify-center rounded-lg bg-gray-100'>
                 <Icon className='text-xl' />
             </div>
-            <p className='font-semibold'>{name}</p>
+            <p className='font-semibold flex items-center gap-2'>{name}{available === false ? <FiLock /> : ""}</p>
             {description && <p className='text-sm text-gray-500'>{description}</p>}
         </Link>
     )

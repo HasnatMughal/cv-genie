@@ -2,6 +2,9 @@
 
 import ResumeuploadButton from "@/components/ResumeuploadButton"
 import ResumeUploadCard from "@/components/ResumeUploadCard"
+import useGetUserPlan from "@/hooks/useGetUserPlan";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 
 type FeedbackType = {
@@ -12,6 +15,9 @@ type FeedbackType = {
 };
 
 export default function LinkedInOpt(){
+
+ 
+
     const [resume, setResume] = useState('')
     const [loading, setLoading] = useState(false)
     const [headline, setHeadline] = useState('')
@@ -19,6 +25,21 @@ export default function LinkedInOpt(){
     const [copiedAbout ,setCopiedAbout] = useState(false) 
     const [copiedHeadline ,setCopiedHeadline] = useState(false) 
     const [data, setData] = useState('')
+
+    const { data: session, status } = useSession()
+    const router = useRouter()
+
+    
+   const userPlan = useGetUserPlan()
+
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push("/login")
+        }
+        if(userPlan.userPlan === 'free'){
+            router.push('/UpgradeToPro')
+        }
+    }, [status, router, userPlan.userPlan])
 
 
     const getMyResume = async() => {
@@ -69,6 +90,11 @@ export default function LinkedInOpt(){
        setCopiedHeadline(true)
 
     }
+
+    
+
+    if (status === "loading") return <div>Loading...</div>
+    if (!session) return null
     
     
     return(
