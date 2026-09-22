@@ -11,7 +11,7 @@ export async function POST(req: Request){
     try {
         const event = await paddle.webhooks.unmarshal(
             rawText,
-            process.env.PADDLE_WEBHOOK_SCRET as string,
+            process.env.PADDLE_WEBHOOK_SECRET as string,
             signature
         )
 
