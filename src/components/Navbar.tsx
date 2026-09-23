@@ -68,7 +68,8 @@ function Navbar() {
         <>
            
             <div className='md:hidden flex items-center justify-between p-4 border-b'>
-                <h1 className='text-2xl font-bold'>CV Genie</h1>
+                <Logo />
+                {/* <h1 className='text-2xl font-bold'>CV Genie</h1> */}
                 <button onClick={() => setIsOpen(true)} aria-label="Open menu">
                     <FiMenu size={26} />
                 </button>
