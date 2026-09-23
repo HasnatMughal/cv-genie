@@ -16,6 +16,7 @@ import {
     FiMenu,
     FiX
 } from "react-icons/fi";
+import Logo from './Logo';
 
 function Navbar() {
     const [isOpen, setIsOpen] = useState(false)
@@ -91,7 +92,8 @@ function Navbar() {
                 `}
             >
                 <div className='flex items-center justify-between'>
-                    <h1 className='text-3xl md:text-5xl font-bold'>CV Genie</h1>
+                    {/* <h1 className='text-3xl md:text-5xl font-bold'>CV Genie</h1> */}
+                    <Logo />
                     <button className='md:hidden' onClick={() => setIsOpen(false)} aria-label="Close menu">
                         <FiX size={24} />
                     </button>

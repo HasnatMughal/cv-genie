@@ -15,26 +15,49 @@ export async function POST(req: Request){
             signature
         )
 
-        if(event.eventType === EventName.TransactionCompleted){
-            const userId = event.data.customData?.userId as string
+        switch (event.eventType){
+            case EventName.TransactionCompleted : {
+                const userId = event.data.customData?.userId as string
+                const customerId = event.data.customerId as string
+                const subscriptionId = event.data.subscriptionId as string;
 
-            if(userId){
-                await prisma?.user?.update({
-                    where:{id:userId},
-                    data:{plan:'paid'}
-                })
+                if(userId){
+                    await prisma.user?.update({
+                        where:{id:userId},
+                        data:{
+                            plan:'paid',
+                            paddleCustomerId:customerId,
+                            paddleSubscriptionId:subscriptionId
+                            
+                        }
+                    })
+                }
+                break
             }
-        }
-        if(event.eventType === EventName.TransactionCanceled){
-            const userId = event.data.customData?.userId as string
 
-            if(userId){
-                await prisma?.user?.update({
-                    where:{id:userId},
+            case EventName.TransactionCanceled : {
+                const subscriptionId = event.data.id
+
+                await prisma.user.updateMany({
+                    where:{ paddleSubscriptionId: subscriptionId },
                     data:{plan:'free'}
                 })
+                break
             }
+            case EventName.SubscriptionPastDue : {
+                 const subscriptionId = event.data.id
+
+                await prisma.user.updateMany({
+                    where: { paddleSubscriptionId: subscriptionId },
+                    data: { plan: "free" }, 
+                })
+                break
+            }
+default:
+
+break
         }
+
         return NextResponse.json({received:true})
     } catch (error) {
         return NextResponse.json({error:"Invalid signature"}, {status:400})
