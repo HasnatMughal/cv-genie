@@ -57,38 +57,38 @@ const featureItems = [
     },
     {
         name: "Resume Analyzer",
-        link: userPlan === 'paid' || "lifetime" ? "/ResumeAnalysis" : "/UpgradeToPro",
+        link: userPlan === 'paid' || userPlan === "lifetime" ? "/ResumeAnalysis" : "/UpgradeToPro",
         icon: FiSearch,
         description: "Get AI feedback on your resume",
-        available: userPlan === "paid" || "lifetime" ? true : false
+        available: userPlan === "paid" || userPlan === "lifetime" ? true : false
     },
     {
         name: "Job Matcher",
-        link: userPlan === 'paid' || "lifetime" ? "/JobMatcher" : "/UpgradeToPro",
+        link: userPlan === 'paid' || userPlan === "lifetime" ? "/JobMatcher" : "/UpgradeToPro",
         icon: FiUsers,
         description: "Find roles that match your profile",
-        available: userPlan === "paid" || "lifetime" ? true : false
+        available: userPlan === "paid" || userPlan === "lifetime" ? true : false
     },
     {
         name: "Interview Prep",
-        link:userPlan === 'paid' || "lifetime" ? "/interViewPrep" : "/UpgradeToPro",
+        link:userPlan === 'paid' || userPlan === "lifetime" ? "/interViewPrep" : "/UpgradeToPro",
         icon: FiMic,
         description: "Practice with AI-generated interview questions",
-        available: userPlan === "paid" || "lifetime" ? true : false
+        available: userPlan === "paid" || userPlan === "lifetime" ? true : false
     },
     {
         name: "LinkedIn Generator",
-        link:userPlan === 'paid' || "lifetime" ? "/linkedInOpt" : "/UpgradeToPro",
+        link:userPlan === 'paid' || userPlan === "lifetime" ? "/linkedInOpt" : "/UpgradeToPro",
         icon: FiLinkedin,
         description: "Craft an optimized LinkedIn profile",
-        available: userPlan === "paid" || "lifetime" ? true : false
+        available: userPlan === "paid" || userPlan === "lifetime" ? true : false
     },
     {
         name: "Cold Email Generator",
-        link: userPlan === 'paid' || "lifetime" ? "/cold-email" : "/UpgradeToPro",
+        link: userPlan === 'paid' || userPlan === "lifetime" ? "/cold-email" : "/UpgradeToPro",
         icon: FiMail,
         description: "Write outreach emails that get replies",
-        available: userPlan === "paid" || "lifetime" ? true : false
+        available: userPlan === "paid" || userPlan === "lifetime" ? true : false
     },
    
 ]
