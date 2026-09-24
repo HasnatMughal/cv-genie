@@ -95,3 +95,12 @@ model ColdMail{
   userId String
   user User @relation(fields:[userId] , references:[id])
 }
+
+model RadeemCode{
+  id        String   @id @default(cuid())
+  code      String   @unique
+  isUsed    Boolean  @default(false)
+  usedById  String?
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+}

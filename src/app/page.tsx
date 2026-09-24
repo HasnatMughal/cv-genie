@@ -57,45 +57,45 @@ const featureItems = [
     },
     {
         name: "Resume Analyzer",
-        link: userPlan === 'paid' ? "/ResumeAnalysis" : "/UpgradeToPro",
+        link: userPlan === 'paid' || "lifetime" ? "/ResumeAnalysis" : "/UpgradeToPro",
         icon: FiSearch,
         description: "Get AI feedback on your resume",
-        available: userPlan === "paid" ? true : false
+        available: userPlan === "paid" || "lifetime" ? true : false
     },
     {
         name: "Job Matcher",
-        link: userPlan === 'paid' ? "/JobMatcher" : "/UpgradeToPro",
+        link: userPlan === 'paid' || "lifetime" ? "/JobMatcher" : "/UpgradeToPro",
         icon: FiUsers,
         description: "Find roles that match your profile",
-        available: userPlan === "paid" ? true : false
+        available: userPlan === "paid" || "lifetime" ? true : false
     },
     {
         name: "Interview Prep",
-        link:userPlan === 'paid' ? "/interViewPrep" : "/UpgradeToPro",
+        link:userPlan === 'paid' || "lifetime" ? "/interViewPrep" : "/UpgradeToPro",
         icon: FiMic,
         description: "Practice with AI-generated interview questions",
-        available: userPlan === "paid" ? true : false
+        available: userPlan === "paid" || "lifetime" ? true : false
     },
     {
         name: "LinkedIn Generator",
-        link:userPlan === 'paid' ? "/linkedInOpt" : "/UpgradeToPro",
+        link:userPlan === 'paid' || "lifetime" ? "/linkedInOpt" : "/UpgradeToPro",
         icon: FiLinkedin,
         description: "Craft an optimized LinkedIn profile",
-        available: userPlan === "paid" ? true : false
+        available: userPlan === "paid" || "lifetime" ? true : false
     },
     {
         name: "Cold Email Generator",
-        link: userPlan === 'paid' ? "/cold-email" : "/UpgradeToPro",
+        link: userPlan === 'paid' || "lifetime" ? "/cold-email" : "/UpgradeToPro",
         icon: FiMail,
         description: "Write outreach emails that get replies",
-        available: userPlan === "paid" ? true : false
+        available: userPlan === "paid" || "lifetime" ? true : false
     },
    
 ]
   return (
     <div className="flex   flex-col flex-1 items-center font-sans ">
       <div className="flex items-center py-4 justify-center gap-8 w-full border-b border-gray-200">
-      <p className="flex gap-2 ">Current Plan: {loading === true ? <span>Loading...</span> : userPlan === "free" ? <span>Free</span> : userPlan === 'paid' && <span>Paid</span>}</p>
+      <p className="flex gap-2 ">Current Plan: {loading === true ? <span>Loading...</span> : userPlan === "free" ? <span>Free</span> : userPlan === 'paid' ? <span>Paid</span>  : userPlan === 'lifetime' && <span>Lifetime</span>}</p>
       {userPlan === 'free' ? <UpgradeToPro /> : ''}
 
       </div>

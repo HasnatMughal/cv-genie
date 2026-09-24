@@ -14,7 +14,9 @@ import {
     FiSettings,
     FiHome,
     FiMenu,
-    FiX
+    FiX,
+    FiCode,
+    FiGift
 } from "react-icons/fi";
 import Logo from './Logo';
 
@@ -52,12 +54,13 @@ function Navbar() {
         { name: "Home", link: "/", icon: FiHome, comingSoon: false },
         { name: "Dashboard", link: "/dashboard", icon: FiGrid, available:  true  },
         { name: "Cover Letter", link:  "/CoverLetter" , icon: FiFileText, available: true },
-        { name: "Resume Analyzer", link: userPlan === "paid" ? "/ResumeAnalysis" : 'UpgradeToPro', icon: FiSearch, available: userPlan === "paid" ? true : false },
-        { name: "Job Matcher", link:   userPlan === "paid" ? "/JobMatcher" : 'UpgradeToPro', icon: FiUsers, available: userPlan === "paid" ? true : false  },
-        { name: "Interview Preperation", link:  userPlan === "paid" ? "/interViewPrep" : 'UpgradeToPro', icon: FiMic, available: userPlan === "paid" ? true : false  },
-        { name: "LinkedIn Generator", link:  userPlan === "paid" ? "/LinkedInOpt" : 'UpgradeToPro', icon: FiLinkedin, available: userPlan === "paid" ? true : false  },
-        { name: "Cold Email Generator", link: userPlan === "paid" ? "/cold-email" : 'UpgradeToPro', icon: FiMail, available: userPlan === "paid" ? true : false  },
+        { name: "Resume Analyzer", link: userPlan === "paid" || "lifetime" ? "/ResumeAnalysis" : 'UpgradeToPro', icon: FiSearch, available: userPlan === "paid" || "lifetime" ? true : false },
+        { name: "Job Matcher", link:   userPlan === "paid" || "lifetime" ? "/JobMatcher" : 'UpgradeToPro', icon: FiUsers, available: userPlan === "paid" || "lifetime" ? true : false  },
+        { name: "Interview Preperation", link:  userPlan === "paid" || "lifetime" ? "/interViewPrep" : 'UpgradeToPro', icon: FiMic, available: userPlan === "paid" || "lifetime" ? true : false  },
+        { name: "LinkedIn Generator", link:  userPlan === "paid" || "lifetime" ? "/LinkedInOpt" : 'UpgradeToPro', icon: FiLinkedin, available: userPlan === "paid" || "lifetime" ? true : false  },
+        { name: "Cold Email Generator", link: userPlan === "paid" || "lifetime" ? "/cold-email" : 'UpgradeToPro', icon: FiMail, available: userPlan === "paid" || "lifetime" ? true : false  },
         { name: "Settings", link: "/settings", icon: FiSettings, available: true },
+        { name: "Redeem Code", link: "/redeem", icon: FiGift, available: true },
     ]
 
     if(pathname === "/login" || pathname === '/signup'){
