@@ -4,7 +4,7 @@ import { writeFileSync } from "fs"
 const prisma = new PrismaClient()
 
 async function main() {
-    const codes = await prisma.radeemCode.findMany({
+    const codes = await prisma.redeemCode.findMany({
         where: { isUsed: false },
         select: { code: true },
     })

@@ -10,7 +10,7 @@ export async function POST(req:Request){
 
     const {code} = await req.json()
 
-    const redeemCode = await prisma.radeemCode.findUnique({
+    const redeemCode = await prisma.redeemCode.findUnique({
         where:{
             code
         }
@@ -26,7 +26,7 @@ export async function POST(req:Request){
 
     await prisma.$transaction(
         [
-            prisma.radeemCode.update({
+            prisma.redeemCode.update({
                 where:{code},
                 data:{
                     isUsed:true,

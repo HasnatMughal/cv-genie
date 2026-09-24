@@ -16,7 +16,7 @@ async function main() {
         code: generateCode()
     }))
 
-    await prisma.radeemCode.createMany({
+    await prisma.redeemCode.createMany({
         data:codes,
         skipDuplicates: true
     })

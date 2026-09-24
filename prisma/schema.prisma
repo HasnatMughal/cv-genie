@@ -96,7 +96,7 @@ model ColdMail{
   user User @relation(fields:[userId] , references:[id])
 }
 
-model RadeemCode{
+model RedeemCode{
   id        String   @id @default(cuid())
   code      String   @unique
   isUsed    Boolean  @default(false)
