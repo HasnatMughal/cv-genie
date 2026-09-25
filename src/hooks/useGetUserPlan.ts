@@ -2,8 +2,8 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 function useGetUserPlan() {
-  const [userPlan, setUserPlan] = useState<string | null>('free')
-  const [checking, setChecking] = useState(false)
+    const [userPlan, setUserPlan] = useState<string | null>(null)
+    const [checking, setChecking] = useState(true)
   const router = useRouter()
 
   useEffect(() => {

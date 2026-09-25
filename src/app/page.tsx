@@ -78,7 +78,7 @@ const featureItems = [
     },
     {
         name: "LinkedIn Generator",
-        link:userPlan === 'paid' || userPlan === "lifetime" ? "/linkedInOpt" : "/UpgradeToPro",
+        link:userPlan === 'paid' || userPlan === "lifetime" ? "/LinkedInOpt" : "/UpgradeToPro",
         icon: FiLinkedin,
         description: "Craft an optimized LinkedIn profile",
         available: userPlan === "paid" || userPlan === "lifetime" ? true : false

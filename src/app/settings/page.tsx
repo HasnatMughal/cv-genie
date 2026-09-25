@@ -4,6 +4,7 @@ import Logout from "@/components/Logout";
 import UpgradeToPro from "@/components/UpgradeToPro";
 import { UploadButton } from "@/lib/uploadthing";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 import { toast } from "sonner";
@@ -97,31 +98,12 @@ export default function Setting(){
                 </a>
             ) : (
                 <p className="text-gray-500">No resume uploaded yet.</p>
-            )}
+            )
+            
+            }
+            <Link href={"/UploadResume"} className="text-blue-500 hover:text-blue-700">Upload Resume</Link>
 
-            <UploadButton
-                endpoint="resumeUploader"
-                onClientUploadComplete={async (res) => {
-                    const url = res[0].ufsUrl
-                    try {
-                        const updateRes = await fetch("/api/user/resume", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ resumeUrl: url }),
-                        })
-                        if (updateRes.ok) {
-                            toast.success("Resume updated successfully")
-                            getUser()
-                        }
-                    } catch (error) {
-                        toast.error("Failed to save resume")
-                    }
-                }}
-                onUploadError={() => {
-                    toast.error("Upload failed")
-                }}
-                className="w-fit"
-            />
+
         </div>
 
         {/* Billing Section */}
@@ -130,7 +112,7 @@ export default function Setting(){
             <p className="text-gray-500">
                 Current Plan: <span className="font-semibold capitalize">{user?.plan}</span>
             </p>
-            <UpgradeToPro />
+            {user?.plan === "free" && <UpgradeToPro />}
         </div>
         <div>
             <button className='px-4 py-2 bg-red-500 hover:bg-red-700 text-white rounded-xl' onClick={() => setOpenLogoutOption(true)} >Logout</button>

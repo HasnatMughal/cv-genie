@@ -30,7 +30,7 @@ export default function InterviewPrep(){
             if (status === "unauthenticated") {
                 router.push("/login")
             }
-            if(userPlan.userPlan === 'free'){
+            if(!userPlan.checking && userPlan.userPlan === 'free'){
                 router.push('/UpgradeToPro')
             }
         }, [status, router, userPlan.userPlan])
